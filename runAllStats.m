@@ -7,7 +7,7 @@ defaultsGLTC
 
 %% file finder
 
-availfiles = dir(fullfile(rootFolder));
+availfiles = dir(fullfile(rootDir));
 % remove directories from this structure
 numFiles = length(availfiles);
 rmvFile = false(numFiles,1);
@@ -60,9 +60,9 @@ for k = 1:numFiles
             datesZ = dates(useI);
             wtrZ   = wtr(useI);
             if strcmp(lakeNm,'Toolik')
-                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
+                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, toolFitRange);
                 [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
-                        getStats( datesZ, wtrZ, [6 7 8], fitParams, R2);
+                        getStats( datesZ, wtrZ, toolMmS, fitParams, R2);
                 disp('');
                 appendLog(fileN, [lakeNm  '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' lakeNm ' at z=' num2str(unZ(zU)) ' for JJA'])

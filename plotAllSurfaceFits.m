@@ -7,7 +7,7 @@ defaultsGLTC
 
 %% file finder
 
-availfiles = dir(fullfile(rootFolder));
+availfiles = dir(fullfile(rootDir));
 % remove directories from this structure
 numFiles = length(availfiles);
 rmvFile = false(numFiles,1);
@@ -45,7 +45,7 @@ for k = 1:numFiles
             useI = eq(unZ(zU),zT);
             datesZ = datesT(useI);
             wtrZ   = wtrT(useI);
-            [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
+            fitParams = fitDayNum( datesZ, wtrZ, fitRange);
             dVec = datevec(datesZ);
             dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
             plot(dStrip,wtrZ,'k.');
@@ -70,7 +70,7 @@ for k = 1:numFiles
         datesZ = dates(useI);
         wtrZ   = wtr(useI);
         if strcmp(lakeNm,'Toolik')
-            [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
+            fitParams = fitDayNum( datesZ, wtrZ, toolFitRange);
             dVec = datevec(datesZ);
             dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
             plot(dStrip,wtrZ,'k.');
@@ -88,7 +88,7 @@ for k = 1:numFiles
             pause(.5);
             close all
         else
-            [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
+            fitParams = fitDayNum( datesZ, wtrZ, fitRange);
             dVec = datevec(datesZ);
             dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
             plot(dStrip,wtrZ,'k.');
