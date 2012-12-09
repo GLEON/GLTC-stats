@@ -1,21 +1,11 @@
-function plotAllSurfaceFits_GLTC( timeRange )
+function plotAllSurfaceFits()
 
 % writes all files for raw data in directory.
 
-rootFolder = 'Raw Data\';
-plotDir = 'Figures\';
-if eq(nargin,0)
-    timeRange = 'JAS';
-    fitRange = [183 274]; %July 1 to Sept 30th
-end
+rootFolder = 'G:\GLTC\Raw Data\';
+plotDir = 'G:\GLTC\Figures\';
 
-
-
-if strcmp(timeRange,'JAS')
-    mmS = [7 8 9];
-elseif strcmp(timeRange,'JFM')
-    mmS = [1 2 3];
-end
+fitRange = [183 274]; %July 1 to Sept 30th
 
 
 %% file finder
@@ -38,12 +28,11 @@ availfiles = availfiles(~rmvFile);      % now only files
 %% loop through files, read out, parse and write stats
 
 numFiles = length(availfiles);
-[fileN] = startLog_GLTC;
 for k = 1:numFiles
     fileName = availfiles(k).name;
     disp('******-------********');
     disp(['working on ' fileName]);
-    [dates, wtr, z, lakeNm] = loadLakes_GLTC( fileName );
+    [dates, wtr, z, lakeNm] = loadLakes( fileName );
     % lakeNm can be cell of multiple lakes, single lake, or single string
     if iscell(lakeNm)
         % how many lakes?
@@ -59,12 +48,12 @@ for k = 1:numFiles
             useI = eq(unZ(zU),zT);
             datesZ = datesT(useI);
             wtrZ   = wtrT(useI);
-            [ fitParams, R2 ] = fitDayNum_GLTC( datesZ, wtrZ, fitRange);
+            [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
             dVec = datevec(datesZ);
             dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
             plot(dStrip,wtrZ,'k.');
             inDts = fitRange(1):fitRange(2);
-            [vals] = getValsFromFit_GLTC(inDts,fitParams);
+            [vals] = getValsFromFit(inDts,fitParams);
             hold on
             plot(inDts,vals,'k-','LineWidth',2.5);
             titl = regexprep(unLakes{lk},'_',' ');
@@ -84,15 +73,15 @@ for k = 1:numFiles
         datesZ = dates(useI);
         wtrZ   = wtr(useI);
         if strcmp(lakeNm,'Toolik')
-            [ fitParams, R2 ] = fitDayNum_GLTC( datesZ, wtrZ, fitRange);
+            [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
             dVec = datevec(datesZ);
             dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
             plot(dStrip,wtrZ,'k.');
             inDts = fitRange(1):fitRange(2);
-            [vals] = getValsFromFit_GLTC(inDts,fitParams);
+            [vals] = getValsFromFit(inDts,fitParams);
             hold on
             plot(inDts,vals,'k-','LineWidth',2.5);
-            titl = regexprep(unLakes{lk},'_',' ');
+            titl = regexprep(lakeNm,'_',' ');
             title(titl);
             ylabel('Temperature');
             xlabel('Day number');
@@ -102,15 +91,15 @@ for k = 1:numFiles
             pause(.5);
             close all
         else
-            [ fitParams, R2 ] = fitDayNum_GLTC( datesZ, wtrZ, fitRange);
+            [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
             dVec = datevec(datesZ);
             dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
             plot(dStrip,wtrZ,'k.');
             inDts = fitRange(1):fitRange(2);
-            [vals] = getValsFromFit_GLTC(inDts,fitParams);
+            [vals] = getValsFromFit(inDts,fitParams);
             hold on
             plot(inDts,vals,'k-','LineWidth',2.5);
-            titl = regexprep(unLakes{lk},'_',' ');
+            titl = regexprep(lakeNm,'_',' ');
             title(titl);
             ylabel('Temperature');
             xlabel('Day number');
