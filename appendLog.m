@@ -1,8 +1,5 @@
 function appendLog(fileN, lakeName, logMessage, years)
 
-lakeName = regexprep(lakeName,' ','_');
-lakeName = regexprep(lakeName,'…','');
-
 
 fID   = fopen(fileN,'a');
 for j = 1:length(years);

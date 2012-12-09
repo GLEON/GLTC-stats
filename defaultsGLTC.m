@@ -7,8 +7,9 @@ if strcmp(timeRange,'JAS')
     toolMmS = [6 7 8];
 elseif strcmp(timeRange,'JFM')
     mmS = [1 2 3];
-    
 end
+
+mxTemp = 45;                % degrees C, for outlier removal
 
 dateForm = 'yyyy-mm-dd HH:MM:SS';
 figRes   = '-m1';

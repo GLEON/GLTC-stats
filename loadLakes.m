@@ -21,6 +21,7 @@ if strcmp(fileName,'11Swedish_boreal_lakes.txt')
     z     = ones(length(wtr),1)*zi;
     lakeNm= data{lakeNmI};
     
+
 elseif strcmp(fileName,'Historical_FL.txt')
     reader = '%s %s %s %f %s %f %f %f';
     delim  = '\t';
@@ -666,7 +667,6 @@ elseif strcmp(fileName,'MW Temperature Data.xls')
         end
     end
     % rid of all nan z's
-    
     nanI = isnan(z) | isnan(wtr);
     wtr = wtr(~nanI);
     z   = z(~nanI);
@@ -733,4 +733,14 @@ elseif strcmp(fileName,'TemperaturesBourget.xlsx')
     dates = dates(~nanI);
     lakeNm = 'Bourget';
 end
+lakeNm = regexprep(lakeNm,' ','_');
+lakeNm = regexprep(lakeNm,'…','');
+rmvI = gt(wtr,mxTemp);
+wtr = wtr(~rmvI);
+z   = z(~rmvI);
+dates = dates(~rmvI);
+if iscell(lakeNm)
+    lakeNm = lakeNm(~rmvI);
+end
 
+end
