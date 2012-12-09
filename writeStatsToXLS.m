@@ -38,7 +38,7 @@ if all(eq(size(writeCell),[1 5]))
 else
     xlswrite(outFile,writeCell,['z_' num2str(z)]);
     excelObj = actxserver('Excel.Application');
-    excelWorkbook = excelObj.workbooks.Open([cd '\' outFile]);
+    excelWorkbook = excelObj.workbooks.Open([outFile]);
     worksheets = excelObj.sheets;
     numSheets = worksheets.count;
     worksheet.excelObj.EnableSound = false;
