@@ -13,7 +13,6 @@ numFiles = length(availfiles);
 rmvFile = false(numFiles,1);
 for k = 1:numFiles
     if availfiles(k).isdir
-        
         rmvFile(k) = true;
     else
         disp(availfiles(k).name);
@@ -50,7 +49,7 @@ for k = 1:numFiles
                     getStats( datesZ, wtrZ, mmS, fitParams, R2);
                 appendLog(fileN, [unLakes{lk} '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' unLakes{lk} ' at z=' num2str(unZ(zU))])
-                writeStats(years,meVal,mxGap,meGap,nmGap,unLakes{lk},unZ(zU));
+                writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,unLakes{lk},unZ(zU));
             end
         end
     else
@@ -66,7 +65,7 @@ for k = 1:numFiles
                 disp('');
                 appendLog(fileN, [lakeNm  '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' lakeNm ' at z=' num2str(unZ(zU)) ' for JJA'])
-                writeStats(years,meVal,mxGap,meGap,nmGap,lakeNm,unZ(zU),'JJA');
+                writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeNm,unZ(zU),'JJA');
                 
             else
                 [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
@@ -75,7 +74,7 @@ for k = 1:numFiles
                 disp('');
                 appendLog(fileN, [lakeNm  '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' lakeNm ' at z=' num2str(unZ(zU))])
-                writeStats(years,meVal,mxGap,meGap,nmGap,lakeNm,unZ(zU),timeRange);
+                writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeNm,unZ(zU),timeRange);
              end
         end
     end
