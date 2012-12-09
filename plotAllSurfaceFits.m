@@ -40,9 +40,8 @@ for k = 1:numFiles
             datesT = dates(useI);
             wtrT   = wtr(useI);
             zT     = z(useI);
-            unZ    = unique(z);
-            zU = 1;
-            useI = eq(unZ(zU),zT);
+            zU     = mode(zT);
+            useI = eq(zU,zT);
             datesZ = datesT(useI);
             wtrZ   = wtrT(useI);
             fitParams = fitDayNum( datesZ, wtrZ, fitRange);
@@ -64,16 +63,16 @@ for k = 1:numFiles
             close all
         end
     else
-        unZ    = unique(z);
-        zU = 1;
-        useI = eq(unZ(zU),z);
-        datesZ = dates(useI);
-        wtrZ   = wtr(useI);
+
+        zU     = mode(z);
+        useI   = eq(zU,z);
+        dates = dates(useI);
+        wtr   = wtr(useI);
         if strcmp(lakeNm,'Toolik')
-            fitParams = fitDayNum( datesZ, wtrZ, toolFitRange);
-            dVec = datevec(datesZ);
-            dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
-            plot(dStrip,wtrZ,'k.');
+            fitParams = fitDayNum( dates, wtr, toolFitRange);
+            dVec = datevec(dates);
+            dStrip = datenum([zeros(length(dates),1) dVec(:,2:end)]);
+            plot(dStrip,wtr,'k.');
             inDts = fitRange(1):fitRange(2);
             [vals] = getValsFromFit(inDts,fitParams);
             hold on
@@ -88,10 +87,10 @@ for k = 1:numFiles
             pause(.5);
             close all
         else
-            fitParams = fitDayNum( datesZ, wtrZ, fitRange);
-            dVec = datevec(datesZ);
+            fitParams = fitDayNum( dates, wtr, fitRange);
+            dVec = datevec(dates);
             dStrip = datenum([zeros(length(datesZ),1) dVec(:,2:end)]);
-            plot(dStrip,wtrZ,'k.');
+            plot(dStrip,wtr,'k.');
             inDts = fitRange(1):fitRange(2);
             [vals] = getValsFromFit(inDts,fitParams);
             hold on
