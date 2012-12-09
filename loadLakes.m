@@ -858,7 +858,7 @@ elseif strcmp(fileName,'Ozzie_lakes.xlsx')
     for i = 1:length(z)
         lakeNm{i} = nameKey.((['s_' num2str(stat(i))]));
     end
-    rmvI = EQ(wtr,0);       % THESE ARE ERRORS
+    rmvI = eq(wtr,0);       % THESE ARE ERRORS
     wtr = wtr(~rmvI);
     z   = z(~rmvI);
     dates = dates(~rmvI);
