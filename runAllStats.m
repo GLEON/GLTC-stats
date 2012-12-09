@@ -39,7 +39,9 @@ for k = 1:numFiles
             datesT = dates(useI);
             wtrT   = wtr(useI);
             zT     = z(useI);
-            unZ    = unique(z);
+            unZ    = unique(zT);
+            % find depth with most years, tiebreaker: shallowest depth
+            zBest = getBestDepth(datesT,zT);
             for zU = 1:length(unZ)
                 useI = eq(unZ(zU),zT);
                 datesZ = datesT(useI);
@@ -50,14 +52,21 @@ for k = 1:numFiles
                 appendLog(fileN, [unLakes{lk} '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' unLakes{lk} ' at z=' num2str(unZ(zU))])
                 writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,unLakes{lk},unZ(zU),timeRange);
+                if plotSumm && eq(zBest,unZ(zU))
+                    disp(['plotting ' unLakes{lk} ' at z=' num2str(zBest)])
+                    plotSummaryFig(fitParams,R2,years,meVal,logMessage,...
+                        datesZ,wtrZ,unLakes{lk},zBest); pause(0.5);
+                end
             end
         end
     else
         unZ    = unique(z);
+        zBest = getBestDepth(datesZ,z);
         for zU = 1:length(unZ)
             useI = eq(unZ(zU),z);
             datesZ = dates(useI);
             wtrZ   = wtr(useI);
+            % find depth with most years, tiebreaker: shallowest depth
             if strcmp(lakeNm,'Toolik')
                 [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, toolFitRange);
                 [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
@@ -66,7 +75,11 @@ for k = 1:numFiles
                 appendLog(fileN, [lakeNm  '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' lakeNm ' at z=' num2str(unZ(zU)) ' for JJA'])
                 writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeNm,unZ(zU),'JJA');
-                
+                if plotSumm && eq(zBest,unZ(zU))
+                    disp(['plotting ' lakeNm ' at z=' num2str(zBest)])
+                    plotSummaryFig(fitParams,R2,years,meVal,logMessage,...
+                        datesZ,wtrZ,lakeNm,zBest); pause(0.5);
+                end
             else
                 [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
                 [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
@@ -75,6 +88,11 @@ for k = 1:numFiles
                 appendLog(fileN, [lakeNm  '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' lakeNm ' at z=' num2str(unZ(zU))])
                 writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeNm,unZ(zU),timeRange);
+                if plotSumm && eq(zBest,unZ(zU))
+                    disp(['plotting ' lakeNm ' at z=' num2str(zBest)])
+                    plotSummaryFig(fitParams,R2,years,meVal,logMessage,...
+                        datesZ,wtrZ,lakeNm,zBest); pause(0.5);
+                end
              end
         end
     end
