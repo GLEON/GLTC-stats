@@ -1,4 +1,4 @@
-function appendLog_GLTC(fileN, lakeName, logMessage, years)
+function appendLog(fileN, lakeName, logMessage, years)
 
 lakeName = regexprep(lakeName,' ','_');
 lakeName = regexprep(lakeName,'…','');

@@ -1,6 +1,6 @@
-function [dates, wtr, z, lakeNm] = loadLakes_GLTC( fileName )
+function [dates, wtr, z, lakeNm] = loadLakes( fileName )
 
-rootFolder = 'Raw Data\';
+rootFolder = 'G:\GLTC\Raw Data\';
 
 if strcmp(fileName,'11Swedish_boreal_lakes.txt')
     reader = '%s %f %f %f %f %f %f'; 

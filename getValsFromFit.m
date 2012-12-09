@@ -1,4 +1,4 @@
-function [vals] = getValsFromFit_GLTC(time,fitParams,pivotPt)
+function [vals] = getValsFromFit(time,fitParams,pivotPt)
 
 if eq(nargin,2)
     dif = 0;

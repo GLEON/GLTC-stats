@@ -81,7 +81,7 @@ for j = 1:numY
         pivotPt = [dStrip(end) wtrT(end)];
         intDts  = dStrip(end)+1:iStrip(end);
         addDts  = dateT(end)+1:intDays(end);
-        [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
+        [wtrAdd] = getValsFromFit_GLTC(intDts,fitParams,pivotPt);
         wtrT  = [wtrT; wtrAdd];
         dateT = [dateT; addDts'];
        
@@ -96,7 +96,7 @@ for j = 1:numY
         pivotPt = [dStrip(1) wtrT(1)];
         intDts  = iStrip(1):dStrip(1)-1;
         addDts  = intDays(1):dateT-1;
-        [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
+        [wtrAdd] = getValsFromFit_GLTC(intDts,fitParams,pivotPt);
         wtrT  = [wtrAdd; wtrT];
         dateT = [addDts'; dateT];
         % middle 3
@@ -111,13 +111,13 @@ for j = 1:numY
         pivotPt = [dStrip(1) wtrT(1)];
         intDts  = iStrip(1):dStrip(1)-1;
         addDts  = intDays(1):dateT-1;
-        [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
+        [wtrAdd] = getValsFromFit_GLTC(intDts,fitParams,pivotPt);
         wtrT  = [wtrAdd; wtrT];
         dateT = [addDts'; dateT];
         pivotPt = [dStrip(end) wtrT(end)];
         intDts  = dStrip(end)+1:iStrip(end);
         addDts  = dateT(end)+1:intDays(end);
-        [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
+        [wtrAdd] = getValsFromFit_GLTC(intDts,fitParams,pivotPt);
         wtrT  = [wtrT; wtrAdd];
         dateT = [dateT; addDts'];
     else

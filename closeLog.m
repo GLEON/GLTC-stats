@@ -1,4 +1,4 @@
-function closeLog_GLTC(fileN)
+function closeLog(fileN)
 
 fID   = fopen(fileN,'a');
 fprintf(fID,'******\r\n');

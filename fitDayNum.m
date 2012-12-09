@@ -1,4 +1,4 @@
-function [ fitParams, R2 ] = fitDayNum_GLTC( dates, wtr, fitRange)
+function [ fitParams, R2 ] = fitDayNum( dates, wtr, fitRange)
 
 % strips year from date, fits curve to wtr temperature, returns fit
 % parameters.

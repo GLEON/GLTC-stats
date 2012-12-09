@@ -1,4 +1,4 @@
-function writeStats_GLTC(years,meVal,mxGap,meGap,nmGap,lakeName,z,timeRange)
+function writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeName,z,timeRange)
 
 lakeN = regexprep(lakeName,' ','_');
 lakeN = regexprep(lakeN,'…','');
@@ -6,7 +6,7 @@ lakeN = regexprep(lakeN,'…','');
 disp(['lake name is ' lakeN]);
 
 warning off MATLAB:xlswrite:AddSheet
-outFile= ['Processed Data\' lakeN '_GLTC-' timeRange '.xls'];
+outFile= ['G:\GLTC\Processed Data\' lakeN '_GLTC-' timeRange '.xls'];
 
 % build cell for writing
 topHeads = {'Year',[timeRange '_mean'],'max gap','mean gap','number of gaps'};
