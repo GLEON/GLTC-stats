@@ -61,7 +61,7 @@ for k = 1:numFiles
         end
     else
         unZ    = unique(z);
-        zBest = getBestDepth(datesZ,z);
+        zBest = getBestDepth(dates,z);
         for zU = 1:length(unZ)
             useI = eq(unZ(zU),z);
             datesZ = dates(useI);
