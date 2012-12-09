@@ -1,6 +1,6 @@
 function [dates, wtr, z, lakeNm] = loadLakes( fileName )
 
-rootFolder = 'G:\GLTC\Raw Data\';
+defaultsGLTC
 
 if strcmp(fileName,'11Swedish_boreal_lakes.txt')
     reader = '%s %f %f %f %f %f %f'; 
@@ -12,7 +12,7 @@ if strcmp(fileName,'11Swedish_boreal_lakes.txt')
     ddI    = 6;
     wtrI   = 7;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -31,7 +31,7 @@ elseif strcmp(fileName,'Historical_FL.txt')
     ddI    = 8;
     wtrI   = 4;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -47,7 +47,7 @@ elseif strcmp(fileName,'Lake Orta 1980-2001.csv')
     dI     = 5;
     wtrI   = 4;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -63,7 +63,7 @@ elseif strcmp(fileName,'Lake Maggiore 1990-2011.csv')
     dI     = 5;
     wtrI   = 4;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -79,7 +79,7 @@ elseif strcmp(fileName,'Lake Taupo 1995-2011 NEED JFM means.csv')
     dI     = 2;
     wtrI   = 3;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -95,7 +95,7 @@ elseif strcmp(fileName,'Malaren 0.5m 1964-2010.csv')
     dI     = 1;
     wtrI   = 2;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -111,7 +111,7 @@ elseif strcmp(fileName,'Vanern 1973-2010.csv')
     dI     = 1;
     wtrI   = 2;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -126,7 +126,7 @@ elseif strcmp(fileName,'Erken 1m 1988-2007.csv')
     dI     = 1;
     wtrI   = 2;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -142,7 +142,7 @@ elseif strcmp(fileName(1:4),'Okee')
     dI     = 1;
     wtrI   = 5;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim,...
         'TreatAsEmpty','"."');
     fclose all;
@@ -165,7 +165,7 @@ elseif strcmp(fileName,'Index Surface Temp 1967-2012 Tahoe.xlsx')
     mxZ    = 1.2;
     sta_I  = 1;
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Surface Temp');
     
     
@@ -204,7 +204,7 @@ elseif strcmp(fileName,'Mid-lake Surface Temp 1967-2012 Tahoe.xlsx')
     mxZ    = 1.2;
     sta_I  = 1;
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Surface Temp');
     
     
@@ -241,7 +241,7 @@ elseif strcmp(fileName,'Biwa_LBERI.csv')
     zI     = 4;
     wtrI   = 5;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     yyyy  = str2double(regexprep(data{yyyyI},'"',''));
@@ -260,7 +260,7 @@ elseif strcmp(fileName,'Toolik.csv')
     dI     = 2;
     wtrI   = 4;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',3,'Delimiter',delim);
     fclose all;
     
@@ -283,7 +283,7 @@ elseif strcmp(fileName,'Kinneret.csv')
     dI     = 1;
     wtrI   = 2;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -303,7 +303,7 @@ elseif strcmp(fileName,'Mendota_all_0m.csv')
     wtrI   = 4;
     zi     = 0;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -322,7 +322,7 @@ elseif strcmp(fileName,'Lake_Pyhaselka.csv')
     dI     = 2;
     wtrI   = 4;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -343,7 +343,7 @@ elseif strcmp(fileName,'Lake_Valkea-Kotinen_Temp_data_1990_2009.csv')
     wtrI   = 5;
     
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -391,7 +391,7 @@ elseif strcmp(fileName,'Valkea-Kotinen_Temp_data_1990_2010.csv')
     wtrI   = 3;
     zI     = 2;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     dates = NaN(length(data{dI}),1);
@@ -417,7 +417,7 @@ elseif strcmp(fileName,'Rusak_lakes.txt')
     wtrI   = 4;
     zI     = 3;
     
-    fileID = fopen([rootFolder fileName]);
+    fileID = fopen([rootDir fileName]);
     data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
     fclose all;
     
@@ -499,7 +499,7 @@ elseif strcmp(fileName,'Rusak_lakes.txt')
 
 elseif strcmp(fileName,'Lake P‰‰j‰rvi_Temp_data_1994-2010.xlsx')
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Data');
     
     dd_mm  = txt(2,3:end);  % dd.mm format
@@ -532,7 +532,7 @@ elseif strcmp(fileName,'Lake P‰‰j‰rvi_Temp_data_1994-2010.xlsx')
     lakeNm= 'P‰‰j‰rvi';
 elseif strcmp(fileName,'1975-2011 June-October Oneida Lake Surface Temperatures.xlsx')
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Site Surface Temperatures');
     
     date    = txt(2:end,1);  
@@ -549,7 +549,7 @@ elseif strcmp(fileName,'1975-2011 June-October Oneida Lake Surface Temperatures.
     z   = z(srtI);
 elseif strcmp(fileName,'DR32900-Various lakes and reservoirs-Site details and water quality and other variables.xlsx')
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Water Quality');
     methI = 16;
     wtrI  = 32;
@@ -571,7 +571,7 @@ elseif strcmp(fileName,'DR32900-Various lakes and reservoirs-Site details and wa
     lakeNm = lakeNm(~nanI);
 elseif strcmp(fileName,'GesaLAKEvATtEMP.xlsx')
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Blad1');
     wtrI  = 6;
     zI    = 5;
@@ -590,7 +590,7 @@ elseif strcmp(fileName,'GesaLAKEvATtEMP.xlsx')
 elseif strcmp(fileName,'GLWC_Lake-Stechlin_water-temperatures_1957-2012.xls')
     % weird format: different columns for different years
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Tabelle1');
     wtrI  = 2:3:245;
     zI    = 1:3:244;
@@ -629,7 +629,7 @@ elseif strcmp(fileName,'GLWC_Lake-Stechlin_water-temperatures_1957-2012.xls')
     lakeNm = 'Stechlin';
 elseif strcmp(fileName,'MW Temperature Data.xls')
     % ONLY USING SURFACE DATA!!
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Sheet1');
     
     useNames = {'CARDINIA DAM NEAR TOWER - SURF',...
@@ -674,7 +674,7 @@ elseif strcmp(fileName,'MW Temperature Data.xls')
     lakeNm = lakeNm(~nanI);
 elseif strcmp(fileName,'Temp_Greifensee.xls')
     
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Sheet 1');
     wtrI  = 2;
     zI    = 1;
@@ -691,7 +691,7 @@ elseif strcmp(fileName,'Temp_Greifensee.xls')
 elseif strcmp(fileName,'TemperaturesAnnecy.xlsx')
     
     % ONLY using 2.5m depth!!!! ONLY SUMMER!
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Summer');
     wtrI  = 3;
     dI    = 2;
@@ -714,7 +714,7 @@ elseif strcmp(fileName,'TemperaturesAnnecy.xlsx')
 elseif strcmp(fileName,'TemperaturesBourget.xlsx')
     
     % ONLY using 2.0m depth!!! ONLY SUMMER!
-    [num,txt] = xlsread([rootFolder fileName],...
+    [num,txt] = xlsread([rootDir fileName],...
         'Summer');
     wtrI  = 15;
     dI    = 13;

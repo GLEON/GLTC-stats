@@ -1,20 +1,8 @@
-function runAllStats( timeRange )
+function runAllStats
 
 % writes all files for raw data in directory.
 
-rootFolder = 'G:\GLTC\Raw Data\';
-if eq(nargin,0)
-    timeRange = 'JAS';
-    fitRange = [183 274]; %July 1 to Sept 30th
-end
-
-
-
-if strcmp(timeRange,'JAS')
-    mmS = [7 8 9];
-elseif strcmp(timeRange,'JFM')
-    mmS = [1 2 3];
-end
+defaultsGLTC
 
 
 %% file finder
@@ -62,7 +50,7 @@ for k = 1:numFiles
                     getStats( datesZ, wtrZ, mmS, fitParams, R2);
                 appendLog(fileN, [unLakes{lk} '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' unLakes{lk} ' at z=' num2str(unZ(zU))])
-                writeStats(years,meVal,mxGap,meGap,nmGap,unLakes{lk},unZ(zU),timeRange);
+                writeStats(years,meVal,mxGap,meGap,nmGap,unLakes{lk},unZ(zU));
             end
         end
     else

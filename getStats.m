@@ -4,10 +4,6 @@ function [ years, meVal, mxGap, meGap, nmGap logMessage ] = ...
 % 2012-10-20 added ability to calculate without two adjacent months
 
 
-if eq(nargin,2)
-    mmS = [7 8 9];  % months for means
-end
-
 % sort dates;
 [dates,srtI] = sort(dates);
 wtr = wtr(srtI);

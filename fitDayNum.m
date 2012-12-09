@@ -11,7 +11,6 @@ dVec = datevec(dates);
 dStrip = datenum([zeros(length(dates),1) dVec(:,2:end)]);
 
 %% fit to curve
-disp(['dStrip:' num2str(length(dStrip)), 'wtr:' num2str(length(wtr))])
 if gt(length(dates),0)
     useI = le(dStrip,fitRange(2)) & ge(dStrip,fitRange(1)) & ~isnan(wtr);
 else

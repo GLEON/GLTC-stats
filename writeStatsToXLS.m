@@ -1,15 +1,16 @@
-function writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeName,z,timeRange)
+function writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeName,z,writeRange)
 
 lakeN = regexprep(lakeName,' ','_');
 lakeN = regexprep(lakeN,'…','');
+defaultsGLTC
 
 disp(['lake name is ' lakeN]);
 
 warning off MATLAB:xlswrite:AddSheet
-outFile= ['G:\GLTC\Processed Data\' lakeN '_GLTC-' timeRange '.xls'];
+outFile= [resultsDir lakeN '_GLTC-' writeRange '.xls'];
 
 % build cell for writing
-topHeads = {'Year',[timeRange '_mean'],'max gap','mean gap','number of gaps'};
+topHeads = {'Year',[writeRange '_mean'],'max gap','mean gap','number of gaps'};
 
 numY = length(years);
 
@@ -59,10 +60,6 @@ else
     delete(excelObj);
     return;
 end
-
-
-
-
 
 end
 

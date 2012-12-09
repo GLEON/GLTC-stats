@@ -1,11 +1,8 @@
-function plotAllSurfaceFits()
+function plotAllSurfaceFits
 
-% writes all files for raw data in directory.
+% plots the SHALLOWEST depth and fit for raw data in directory.
 
-rootFolder = 'G:\GLTC\Raw Data\';
-plotDir = 'G:\GLTC\Figures\';
-
-fitRange = [183 274]; %July 1 to Sept 30th
+defaultsGLTC
 
 
 %% file finder
@@ -62,7 +59,7 @@ for k = 1:numFiles
             xlabel('Day number');
             set(gca,'XLim',[0 365]);
             set(gcf,'Color','w');
-            export_fig([plotDir titl],'-png','-m1','-nocrop')
+            export_fig([plotDir titl],'-png',figRes,'-nocrop')
             pause(.5);
             close all
         end
@@ -87,7 +84,7 @@ for k = 1:numFiles
             xlabel('Day number');
             set(gca,'XLim',[0 365]);
             set(gcf,'Color','w');
-            export_fig([plotDir titl],'-png','-m1','-nocrop')
+            export_fig([plotDir titl],'-png',figRes,'-nocrop')
             pause(.5);
             close all
         else
@@ -105,7 +102,7 @@ for k = 1:numFiles
             xlabel('Day number');
             set(gca,'XLim',[0 365]);
             set(gcf,'Color','w');
-            export_fig([plotDir titl],'-png','-m1','-nocrop')
+            export_fig([plotDir titl],'-png',figRes,'-nocrop')
             pause(.5);
             close all
         end
