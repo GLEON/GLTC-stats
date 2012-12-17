@@ -858,13 +858,71 @@ elseif strcmp(fileName,'Ozzie_lakes.xlsx')
     for i = 1:length(z)
         lakeNm{i} = nameKey.((['s_' num2str(stat(i))]));
     end
-    rmvI = eq(wtr,0);       % THESE ARE ERRORS
+    rmvI = eq(wtr,0) | eq(wtr,30);       % THESE ARE ERRORS
     wtr = wtr(~rmvI);
     z   = z(~rmvI);
     dates = dates(~rmvI);
     lakeNm = lakeNm(~rmvI);
     
+elseif strcmp(fileName,'brookes - temperature nov 2012 - Others.xlsx')
+    
+    % ONLY using station 1s (not the 3 locations for "10")
+    [num,txt] = xlsread([rootDir fileName],...
+        'Sheet1');
+    zI = 4;
+    stI= 2;
+    dI = 3;
+    wtrI = 8;
+    
+    wtr = num(:,wtrI);
+    z   = num(:,zI);
+    stat= txt(5:end-3,stI);
+    dates = datenum(txt(5:end-3,dI));
+    
+    nameKey = struct(...
+        'DFF6','Lake Fitzroy Falls Midlake',...
+        'DTA1','Lake Yarrunga at from Dam Wall',...
+        'DTA3','Lake Yarrunga at Kangaroo and Yarrunga Jn',...
+        'DTA5','Lake Yarrunga at Shoalhaven River',...
+        'DTA8','Lake Yarrunga at Kangaroo Bendeela',...
+        'DTA10','Lake Yarrunga at Kangaroo Reed Island',...
+        'DWI1','Wingecarribee Lake outlet',...
+        'DWA2','Lake Burragorang 500m u/s Dam Wall',...
+        'DWA9','Lake Burragorang 14km u/s of Dam Wall',...
+        'DWA12','9km d/s of DWA15',...
+        'DWA15','Lake Burragorang 4KM Butchers',...
+        'DWA27','Lake Burragorang at Woll Arm ',...
+        'DCO1','Lake Cordeaux at Dam wall',...
+        'DCA1','Lake Cataract at Dam wall');
+    lakeNm = cell(length(z),1);
+    for i = 1:length(z)
+        lakeNm{i} = nameKey.(stat(i));
+    end
+    lakeNm
+elseif strcmp(fileName,'Temperature_1988-2012_PAlakes.xlsx')
+    [num,txt] = xlsread([rootDir fileName],...
+        'Temp-data'); 
+    wtrI = 3;
+    zI   = 2;
+    HHI  = 1;
+    dI   = 2;
+    lkI  = 1;
+    wtr = num(:,wtrI);
+    z   = num(:,zI);
+    HHfrac = num(:,HHI);
+    dates  = datenum(txt(2:end,dI));
+    lakeNm = txt(2:end,lkI);
+    lakeNm = regexprep(lakeNm,'GIL','Giles');
+    lakeNm = regexprep(lakeNm,'LAC','Lacawac');
+    rmvI = isnan(wtr);
+    wtr = wtr(~rmvI);
+    z   = z(~rmvI);
+    dates = dates(~rmvI);
+    if iscell(lakeNm)
+        lakeNm = lakeNm(~rmvI);
+    end
 end
+
 
 lakeNm = regexprep(lakeNm,' ','_');
 lakeNm = regexprep(lakeNm,'…','');
