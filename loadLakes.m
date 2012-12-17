@@ -901,10 +901,10 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     
     [num,txt] = xlsread([rootDir fileName],...
         'DWA2 - 2000-2005');
-    zI = 3;
+    zI = 4;
     stI= 2;
     dI = 3;
-    wtrI = 4;
+    wtrI = 5;
     
     wtr = num(:,wtrI);
     z   = num(:,zI);
@@ -919,9 +919,9 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
         'DTA8','Lake Yarrunga at Kangaroo Bendeela',...
         'DTA10','Lake Yarrunga at Kangaroo Reed Island',...
         'DWI1','Wingecarribee',...% Lake outlet',...
-        'DWA2','Lake Burragorang 500m u/s Dam Wall',...
-        'DWA9','Lake Burragorang 14km u/s of Dam Wall',...
-        'DWA12','9km d/s of DWA15',...
+        'DWA2','Lake Burragorang 500m s Dam Wall',...
+        'DWA9','Lake Burragorang 14km s of Dam Wall',...
+        'DWA12','9km s of DWA15',...
         'DWA15','Lake Burragorang 4KM Butchers',...
         'DWA27','Lake Burragorang at Woll Arm ',...
         'DCO1','Lake Cordeaux',...% at Dam wall',...
@@ -934,10 +934,6 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     %__ next sheet
     [num,txt] = xlsread([rootDir fileName],...
         'DWA2 - 2005 - 2012');
-    zI = 3;
-    stI= 2;
-    dI = 3;
-    wtrI = 4;
     
     wtrT = num(:,wtrI);
     zT   = num(:,zI);
@@ -957,10 +953,6 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     %__ next sheet
     [num,txt] = xlsread([rootDir fileName],...
         'DWA9');
-    zI = 3;
-    stI= 2;
-    dI = 3;
-    wtrI = 4;
     
     wtrT = num(:,wtrI);
     zT   = num(:,zI);
@@ -980,10 +972,6 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     %__ next sheet
     [num,txt] = xlsread([rootDir fileName],...
         'DWA27');
-    zI = 3;
-    stI= 2;
-    dI = 3;
-    wtrI = 4;
     
     wtrT = num(:,wtrI);
     zT   = num(:,zI);
@@ -1000,36 +988,28 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     dates= [dates; datesT];
     lakeNm = [lakeNm; lakeNmT];
     
-    %__ next sheet
-    [num,txt] = xlsread([rootDir fileName],...
-        'DWA311');
-    zI = 3;
-    stI= 2;
-    dI = 3;
-    wtrI = 4;
-    
-    wtrT = num(:,wtrI);
-    zT   = num(:,zI);
-    stat= txt(5:end-3,stI);
-    datesT = datenum(txt(5:end-3,dI));
-    
-    lakeNmT = cell(length(zT),1);
-    for i = 1:length(zT)
-        lakeNmT{i} = nameKey.(char(stat(i)));
-    end
-    
-    wtr = [wtr; wtrT];
-    z = [z; zT];
-    dates= [dates; datesT];
-    lakeNm = [lakeNm; lakeNmT];
+%     %__ next sheet
+%     [num,txt] = xlsread([rootDir fileName],...
+%         'DWA311');
+%     
+%     wtrT = num(:,wtrI);
+%     zT   = num(:,zI);
+%     stat= txt(5:end-3,stI);
+%     datesT = datenum(txt(5:end-3,dI));
+%     
+%     lakeNmT = cell(length(zT),1);
+%     for i = 1:length(zT)
+%         lakeNmT{i} = nameKey.(char(stat(i)));
+%     end
+%     
+%     wtr = [wtr; wtrT];
+%     z = [z; zT];
+%     dates= [dates; datesT];
+%     lakeNm = [lakeNm; lakeNmT];
     
     %__ next sheet
     [num,txt] = xlsread([rootDir fileName],...
         'DWA12');
-    zI = 3;
-    stI= 2;
-    dI = 3;
-    wtrI = 4;
     
     wtrT = num(:,wtrI);
     zT   = num(:,zI);
@@ -1049,11 +1029,7 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     %__ next sheet
     [num,txt] = xlsread([rootDir fileName],...
         'DWA15');
-    zI = 3;
-    stI= 2;
-    dI = 3;
-    wtrI = 4;
-    
+
     wtrT = num(:,wtrI);
     zT   = num(:,zI);
     stat= txt(5:end-3,stI);
@@ -1069,6 +1045,11 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     dates= [dates; datesT];
     lakeNm = [lakeNm; lakeNmT];
     
+    nanI = isnan(wtr) | isnan(z);
+    wtr = wtr(~nanI);
+    z   = z(~nanI);
+    dates = dates(~nanI);
+    lakeNm = lakeNm(~nanI);
 elseif strcmp(fileName,'Temperature_1988-2012_PAlakes.xlsx')
     [num,txt] = xlsread([rootDir fileName],...
         'Temp-data'); 
