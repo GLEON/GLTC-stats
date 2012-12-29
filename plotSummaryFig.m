@@ -2,6 +2,9 @@ function plotSummaryFig(fitParams,R2,years,meVal,logMessage,dates,wtr,lkNm,z)
 
 close all
 defaultsGLTC
+if strcmp(lkNm,'Toolik')
+    timeRange = toolFitRange;
+end
 titl = regexprep(lkNm,'_',' ');
 
 titl = [titl ' z=' num2str(z)];
@@ -46,6 +49,14 @@ xlabel('Year','Parent',ax_b)
 %% fit calculations and plotting
 dVec = datevec(dates);
 dStrip = datenum([zeros(length(dates),1) dVec(:,2:end)]);
+if strcmp(timeRange,'JFM')
+    % convert December days to negatives of the previous year
+    for j = 1:length(dStrip)
+        if eq(dVec(j,2),12)
+            dStrip(j) = datenum(dVec(j,:))-datenum(dVec(j,1)+1,0,0);
+        end
+    end
+end
 plot(dStrip,wtr,'k.','Parent',ax_t);
 inDts = fitRange(1):fitRange(2);
 fitNum = sum(gt(dStrip,fitRange(1)) & lt(dStrip,fitRange(2)));

@@ -62,7 +62,7 @@ for j = 1:numY
     calc = true;
     intDays = datenum(years(j),mmS(1),1):datenum(years(j),mmS(3)+1,0);
     dVec = datevec(intDays);
-    iStrip = datenum([zeros(length(intDays),1) dVec(:,2:end)]);
+    iStrip = datenum([zeros(length(intDays),1) dVec(:,2:end)]); % valid for JFM
     if all([any(eq(mmT,eqTng(1))) any(eq(mmT,eqTng(2))) any(eq(mmT,eqTng(3))) ...
             any(eq(mmT,eqTng(4))) any(eq(mmT,eqTng(5)))])
         
