@@ -1,4 +1,4 @@
-function [ fitParams, R2 ] = fitDayNum( dates, wtr, fitRange)
+function [ fitParams, R2 ] = fitDayNum( dates, wtr, fitRange,timeRange)
 
 % strips year from date, fits curve to wtr temperature, returns fit
 % parameters.
@@ -9,6 +9,15 @@ wtr   = reshape(wtr,length(wtr),1);
 %% remove year from dates
 dVec = datevec(dates);
 dStrip = datenum([zeros(length(dates),1) dVec(:,2:end)]);
+
+if strcmp(timeRange,'JFM')
+    % convert December days to negatives of the previous year
+    for j = 1:length(dStrip)
+        if eq(dVec(j,2),12)
+            dStrip(j) = datenum(dVec(j,:))-datenum(dVec(j,1)+1,0,0);
+        end
+    end
+end
 
 %% fit to curve
 if gt(length(dates),0)
