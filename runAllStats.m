@@ -46,7 +46,7 @@ for k = 1:numFiles
                 useI = eq(unZ(zU),zT);
                 datesZ = datesT(useI);
                 wtrZ   = wtrT(useI);
-                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
+                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange,timeRange);
                 [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
                     getStats( datesZ, wtrZ, mmS, fitParams, R2);
                 appendLog(fileN, [unLakes{lk} '_z=' num2str(unZ(zU))], logMessage, years)
@@ -68,7 +68,9 @@ for k = 1:numFiles
             wtrZ   = wtr(useI);
             % find depth with most years, tiebreaker: shallowest depth
             if strcmp(lakeNm,'Toolik')
-                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, toolFitRange);
+                if strcmp(timeRange,'JAS')
+                    
+                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, toolFitRange,timeRange);
                 [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
                         getStats( datesZ, wtrZ, toolMmS, fitParams, R2);
                 disp('');
@@ -80,8 +82,11 @@ for k = 1:numFiles
                     plotSummaryFig(fitParams,R2,years,meVal,logMessage,...
                         datesZ,wtrZ,lakeNm,zBest); pause(0.5);
                 end
+                else
+                    disp(['skipping Toolik for ' timeRange]);
+                end
             else
-                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange);
+                [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange,timeRange);
                 [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
                     getStats( datesZ, wtrZ, mmS, fitParams, R2); 
                 disp('');
