@@ -83,7 +83,7 @@ for j = 1:numY
             sprintf('%0.4f',fitParams.b) ')*dayNum'  '+c; '...
             'R2=' sprintf('%0.4f',R2) ')'];
         pivotPt = [dStrip(end) wtrT(end)];
-        intDts  = dStrip(end)+1:iStrip(end);
+        intDts  = floor(dStrip(end))+1:iStrip(end);
         addDts  = dateT(end)+1:intDays(end);
         [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
         wtrT  = [wtrT; wtrAdd];
@@ -98,7 +98,7 @@ for j = 1:numY
             sprintf('%0.4f',fitParams.b) ')*dayNum'  '+c; '...
             'R2=' sprintf('%0.4f',R2) ')'];
         pivotPt = [dStrip(1) wtrT(1)];  % for JFM, this will be Jan
-        intDts  = iStrip(1):dStrip(1)-1;
+        intDts  = iStrip(1):floor(dStrip(1))-1;
         addDts  = intDays(1):dateT-1;
         [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
         wtrT  = [wtrAdd; wtrT];
@@ -113,13 +113,13 @@ for j = 1:numY
             sprintf('%0.4f',fitParams.b) ')*dayNum'  '+c; '...
             'R2=' sprintf('%0.4f',R2) ')'];
         pivotPt = [dStrip(1) wtrT(1)];
-        intDts  = iStrip(1):dStrip(1)-1;
+        intDts  = iStrip(1):floor(dStrip(1))-1;
         addDts  = intDays(1):dateT-1;
         [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
         wtrT  = [wtrAdd; wtrT];
         dateT = [addDts'; dateT];
         pivotPt = [dStrip(end) wtrT(end)];
-        intDts  = dStrip(end)+1:iStrip(end);
+        intDts  = floor(dStrip(end))+1:iStrip(end);
         addDts  = dateT(end)+1:intDays(end);
         [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
         wtrT  = [wtrT; wtrAdd];
