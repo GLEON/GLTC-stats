@@ -3,7 +3,7 @@ function plotSummaryFig(fitParams,R2,years,meVal,logMessage,dates,wtr,lkNm,z)
 close all
 defaultsGLTC
 if strcmp(lkNm,'Toolik')
-    timeRange = toolFitRange;
+    fitRange = toolFitRange;
 end
 titl = regexprep(lkNm,'_',' ');
 
