@@ -1,9 +1,10 @@
-function writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeName,z,writeRange)
+function [written] = writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,lakeName,z,writeRange)
 
 lakeN = regexprep(lakeName,' ','_');
 lakeN = regexprep(lakeN,'…','');
 defaultsGLTC
 
+written = true;
 disp(['lake name is ' lakeN]);
 
 warning off MATLAB:xlswrite:AddSheet
@@ -35,6 +36,7 @@ end
 writeCell = writeCell(:,~rmvI)';
 if all(eq(size(writeCell),[1 5]))
     disp(['not writing sheet z_' num2str(z) ' on ' lakeN '. It is empty'])
+    written = false;
 else
     xlswrite(outFile,writeCell,['z_' num2str(z)]);
     excelObj = actxserver('Excel.Application');

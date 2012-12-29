@@ -51,8 +51,9 @@ for k = 1:numFiles
                     getStats( datesZ, wtrZ, mmS, fitParams, R2);
                 appendLog(fileN, [unLakes{lk} '_z=' num2str(unZ(zU))], logMessage, years)
                 disp(['writing ' unLakes{lk} ' at z=' num2str(unZ(zU))])
-                writeStatsToXLS(years,meVal,mxGap,meGap,nmGap,unLakes{lk},unZ(zU),timeRange);
-                if plotSumm && eq(zBest,unZ(zU))
+                written = writeStatsToXLS(years,meVal,mxGap,...
+                    meGap,nmGap,unLakes{lk},unZ(zU),timeRange);
+                if plotSumm && eq(zBest,unZ(zU)) && written
                     disp(['plotting ' unLakes{lk} ' at z=' num2str(zBest)])
                     plotSummaryFig(fitParams,R2,years,meVal,logMessage,...
                         datesZ,wtrZ,unLakes{lk},zBest); pause(0.5);
