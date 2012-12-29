@@ -57,6 +57,14 @@ for j = 1:numY
     % strip year off dates for fit (if needed)
     dVec = datevec(dateT);
     dStrip = datenum([zeros(length(dateT),1) dVec(:,2:end)]);
+    if eq(eqTng(1),12)
+        % convert December days to negatives of the previous year
+        for k = 1:length(dStrip)
+            if eq(dVec(k,2),12)
+                dStrip(k) = datenum(dVec(k,:))-datenum(dVec(k,1)+1,0,0);
+            end
+        end
+    end
     % do we have data for the months around the mean months? AND all months
     % for calculating stats?
     calc = true;
@@ -89,7 +97,7 @@ for j = 1:numY
             ' fit to (' sprintf('%0.4f',fitParams.a) ')*dayNum^2+(' ...
             sprintf('%0.4f',fitParams.b) ')*dayNum'  '+c; '...
             'R2=' sprintf('%0.4f',R2) ')'];
-        pivotPt = [dStrip(1) wtrT(1)];
+        pivotPt = [dStrip(1) wtrT(1)];  % for JFM, this will be Jan
         intDts  = iStrip(1):dStrip(1)-1;
         addDts  = intDays(1):dateT-1;
         [wtrAdd] = getValsFromFit(intDts,fitParams,pivotPt);
