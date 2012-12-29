@@ -1,4 +1,4 @@
-timeRange = 'JFM';
+timeRange = 'JAS';
 plotSumm  = true;           % plot summary figure?
 
 if strcmp(timeRange,'JAS')
