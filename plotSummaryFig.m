@@ -112,6 +112,6 @@ text(xLoc,yLoc-yJmp,txt2,'Parent',ax_b,'HorizontalAlignment','left',...
 
 plotTitle = regexprep(titl,' ','_');
 plotTitle = regexprep(plotTitle,'=','-');
-export_fig([plotDir plotTitle],figType,figRes,'-nocrop')
+export_fig([plotDir plotTitle '_' timeRange],figType,figRes,'-nocrop')
 
 end
