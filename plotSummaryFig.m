@@ -14,7 +14,12 @@ hSpc= 0.75;
 W   = figW-lM-rM;
 H   = (figH-tM-bM)/2-hSpc/2;
 axLW= 1.25;
-xL_t= [0 365];
+if strcmp(timeRange,'JAS')
+    xL_t= [0 365];
+else
+    xL_t= [-30 335];
+end
+
 mS  = 3;
 
 yTxt = 0.03;
