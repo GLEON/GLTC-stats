@@ -1,13 +1,17 @@
-fitRange = [153 305];       % June 1 to Oct 31st
-toolFitRange = [122 274];   % May 1 to Sept 30th
+
 timeRange = 'JAS';
 plotSumm  = true;           % plot summary figure?
 
 if strcmp(timeRange,'JAS')
     mmS = [7 8 9];
     toolMmS = [6 7 8];
+    fitRange = [153 305];       % June 1 to Oct 31st
+    toolFitRange = [122 274];   % May 1 to Sept 30th
 elseif strcmp(timeRange,'JFM')
     mmS = [1 2 3];
+    toolMmS = [1 2 3];
+    fitRange = [153 305];       % June 1 to Oct 31st
+    toolFitRange = [122 274];   % May 1 to Sept 30th
 end
 
 mxTemp = 45;                % degrees C, for outlier removal
