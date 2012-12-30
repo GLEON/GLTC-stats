@@ -4,6 +4,7 @@ close all
 defaultsGLTC
 if strcmp(lkNm,'Toolik')
     fitRange = toolFitRange;
+    timeRange = 'JJA';
 end
 titl = regexprep(lkNm,'_',' ');
 
@@ -17,7 +18,7 @@ hSpc= 0.75;
 W   = figW-lM-rM;
 H   = (figH-tM-bM)/2-hSpc/2;
 axLW= 1.25;
-if strcmp(timeRange,'JAS')
+if strcmp(timeRange,'JAS') || strcmp(timeRange,'JJA')
     xL_t= [0 365];
 else
     xL_t= [-30 335];

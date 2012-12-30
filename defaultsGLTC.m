@@ -5,7 +5,7 @@ if strcmp(timeRange,'JAS')
     mmS = [7 8 9];
     toolMmS = [6 7 8];
     fitRange = [153 305];       % June 1 to Oct 31st
-    toolFitRange = [153 245];   % June 1 to Sept 1st
+    toolFitRange = [122 274];   % May 1 to Sept 30th
 elseif strcmp(timeRange,'JFM')
     mmS = [1 2 3];
     toolMmS = [1 2 3];
