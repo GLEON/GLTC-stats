@@ -988,24 +988,6 @@ elseif strcmp(fileName,'brookes - temperature nov 2012.xlsx')
     dates= [dates; datesT];
     lakeNm = [lakeNm; lakeNmT];
     
-%     %__ next sheet
-%     [num,txt] = xlsread([rootDir fileName],...
-%         'DWA311');
-%     
-%     wtrT = num(:,wtrI);
-%     zT   = num(:,zI);
-%     stat= txt(5:end-3,stI);
-%     datesT = datenum(txt(5:end-3,dI));
-%     
-%     lakeNmT = cell(length(zT),1);
-%     for i = 1:length(zT)
-%         lakeNmT{i} = nameKey.(char(stat(i)));
-%     end
-%     
-%     wtr = [wtr; wtrT];
-%     z = [z; zT];
-%     dates= [dates; datesT];
-%     lakeNm = [lakeNm; lakeNmT];
     
     %__ next sheet
     [num,txt] = xlsread([rootDir fileName],...
@@ -1072,6 +1054,45 @@ elseif strcmp(fileName,'Temperature_1988-2012_PAlakes.xlsx')
     if iscell(lakeNm)
         lakeNm = lakeNm(~rmvI);
     end
+elseif strcmp(fileName,'LakeMcConaughy_Jordan.xlsx')
+    num = xlsread([rootDir fileName],...
+        '1989-2012'); 
+    wtrI = 5;
+    yyI  = 1;
+    mmI  = 2;
+    ddI  = 3;
+    wtr = num(:,wtrI);
+    dates  = datenum(num(:,yyI),num(:,mmI),num(:,ddI));
+
+    rmvI = isnan(wtr);
+    wtr = wtr(~rmvI);
+    z   = wtr*0;
+    
+    lakeNm = 'McConaughy';
+elseif strcmp(fileName,'NTL_LTER_Lakes_except_ME.txt')
+    reader = '%s %s %f %f ';
+    delim  = '\t';
+    lakeNmI= 1;
+    dI     = 2;
+    wtrI   = 4;
+    zI     = 3;
+    
+    fileID = fopen([rootDir fileName]);
+    data = textscan(fileID,reader,'HeaderLines',1,'Delimiter',delim);
+    fclose all;
+    
+    dates = datenum(data{dI},'yyyy-mm-dd');
+    wtr   = data{wtrI};
+    z     = data{zI};
+    lakeNm= data{lakeNmI};
+    lakeNm = regexprep(lakeNm,'AL','NTL_Allequash');
+    lakeNm = regexprep(lakeNm,'CR','NTL_Crystal');
+    lakeNm = regexprep(lakeNm,'WI','NTL_Wingra');
+    lakeNm = regexprep(lakeNm,'MO','NTL_Monona');
+    lakeNm = regexprep(lakeNm,'SP','NTL_Sparkling');
+    lakeNm = regexprep(lakeNm,'FI','NTL_Fish');
+    lakeNm = regexprep(lakeNm,'BM','NTL_Big_Muskie');
+    lakeNm = regexprep(lakeNm,'TR','NTL_Trout');
 end
 
 
