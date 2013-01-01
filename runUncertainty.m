@@ -54,7 +54,7 @@ for k = 1:numFiles
         if any(numPlt);
             clrs = distinguishable_colors(sum(numPlt));
             close all
-            createUncyFigure(unLakes{lk});
+            [~,~,titl] = createUncyFigure(unLakes{lk});
             clrCnt = 1;
             for j = 1:length(years)
                 if numPlt(j)
@@ -62,8 +62,12 @@ for k = 1:numFiles
                         le(datesZ,datenum(years(j)+1,0,0));
                     plotUncy(datesZ(useI),wtrZ(useI),mmS,fitParams,R2,clrs(clrCnt,:));
                     clrCnt = clrCnt+1;
+                    pause(0.1);
                 end
             end
+            plotTitle = regexprep(titl,' ','_');
+            plotTitle = regexprep(plotTitle,'=','-');
+            export_fig([plotDir plotTitle '_Uncertainty'],figType,figRes,'-nocrop')
         end
     end
 end

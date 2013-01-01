@@ -8,10 +8,10 @@ YYYY = YYYY(1);
 
 useI = ge(dates,datenum(YYYY,mmS(1),1)) & ...
     lt(dates,datenum(YYYY,mmS(3)+1,1));
-lW = 1.25;
+lW = 1.5;
 initNum = sum(useI);
 
-
+rngL = (100-confInt)/2;
 %% now start removing values and refitting...
 
 indx = 1:length(dates);
@@ -31,11 +31,11 @@ for bs = 1:initNum-endValsUncy
         tempI(rmvI+indx(1)-1) = false;
         [~,yVal(n)] = getStats( dates(tempI), wtr(tempI), mmS, fitParams, R2);
     end
-    range = prctile(yVal,[2.5 97.5]);
+    range = prctile(yVal,[rngL 100-rngL]);
     uncy(bs) = (range(2)-range(1))*0.5;
     
 end
-plot(xVal,uncy,'b-','Color',clr,'LineWidth',lW);  
+plot([initNum; xVal],[0; uncy],'b-','Color',clr,'LineWidth',lW);  
 
 end
 
