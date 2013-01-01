@@ -13,6 +13,7 @@ elseif strcmp(timeRange,'JFM')
     toolFitRange = [-30 121];   % Dec 1 to April 30th
 end
 
+minValsUncy = 12;           % minimum number of values (any JAS) to run uncy
 mxTemp = 45;                % degrees C, for outlier removal
 
 dateForm = 'yyyy-mm-dd HH:MM:SS';
