@@ -3,7 +3,7 @@ function [ years, meVal, mxGap, meGap, nmGap logMessage ] = ...
 % returns stats as according to John Lenters' GLTC calculation methods
 % 2012-10-20 added ability to calculate without two adjacent months
 
-
+display = false;
 % sort dates;
 [dates,srtI] = sort(dates);
 wtr = wtr(srtI);
@@ -129,7 +129,9 @@ for j = 1:numY
     end
     if calc
         if gt(length(wtrT),2)
-            disp(logMessage{j})
+            if display 
+                disp(logMessage{j})
+            else
             [dateT,unI] = unique(dateT);
             wtrT = wtrT(unI);
             meVal(j)= mean(interp1(dateT,wtrT,intDays));
