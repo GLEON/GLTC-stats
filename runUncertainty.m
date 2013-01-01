@@ -24,18 +24,14 @@ for k = 1:numFiles
     disp('******-------********');
     disp(['working on ' fileName]);
     [dates, wtr, z, lakeNm] = loadLakes( fileName );
-    % lakeNm can be cell of multiple lakes, single lake, or single string
-    if iscell(lakeNm)
-        % how many lakes?
+    if iscell(lakeNm) % lakeNm can be cell of 1 or more lakes 
         unLakes = unique(lakeNm);
         for lk = 1:length(unLakes);
             useI = strcmp(unLakes{lk},lakeNm);
             datesT = dates(useI);
             wtrT   = wtr(useI);
             zT     = z(useI);
-            % find depth with most years, tiebreaker: shallowest depth
             zBest = getBestDepth(datesT,zT);
-            
             useI = eq(zBest,zT);
             datesZ = datesT(useI);
             wtrZ   = wtrT(useI);
@@ -43,7 +39,7 @@ for k = 1:numFiles
             [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
                 getStats( datesZ, wtrZ, mmS, fitParams, R2);
         end
-    else
+    else % lakeNm can be a single string
         zBest = getBestDepth(dates,z);
         useI = eq(zBest,zT);
         datesZ = dates(useI);
