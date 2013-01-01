@@ -44,6 +44,8 @@ for k = 1:numFiles
             getStats( datesZ, wtrZ, mmS, fitParams, R2);
         % each year
         clrs = distinguishable_colors(length(years));
+        close all
+        figure; hold on;
         for j = 1:length(years)
             useI = ge(datesZ,datenum(years(j),mmS(1),1)) & ...
                 lt(datesZ,datenum(years(j),mmS(3)+1,1));

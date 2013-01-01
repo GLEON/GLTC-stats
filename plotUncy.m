@@ -4,22 +4,22 @@ function plotUncy(dates,wtr,mmS,fitParams,R2,clr)
 defaultsGLTC;
 YYYY = datevec(min(dates));
 YYYY = YYYY(1);
-[~,meVal] = getStats( dates, wtr, mmS, fitParams, R2); % initial value
+% [~,meVal] = getStats( dates, wtr, mmS, fitParams, R2); % initial value
 
 useI = ge(dates,datenum(YYYY,mmS(1),1)) & ...
     lt(dates,datenum(YYYY,mmS(3)+1,1));
 
 initNum = sum(useI);
 
-plot(initNum,0,'bo','MarkerEdgeColor',clr);
-hold on
 
 %% now start removing values and refitting...
 
 indx = 1:length(dates);
 indx = indx(useI); % only indices of values that fall within JAS
+uncy = NaN(initNum-endValsUncy,1);
+xVal = uncy;
 for bs = 1:initNum-endValsUncy
-    xVal = initNum-bs;
+    xVal(bs) = initNum-bs;
     
     yVal = NaN(1,numIter);
     
@@ -32,10 +32,10 @@ for bs = 1:initNum-endValsUncy
         [~,yVal(n)] = getStats( dates(tempI), wtr(tempI), mmS, fitParams, R2);
     end
     range = prctile(yVal,[2.5 97.5]);
-    uncy = (range(2)-range(1))*0.5;
-    plot(xVal,uncy,'bo','MarkerEdgeColor',clr);
+    uncy(bs) = (range(2)-range(1))*0.5;
+    
 end
-        
+plot(xVal,uncy,'b-','Color',clr);  
 
 
 
