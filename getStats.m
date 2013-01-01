@@ -131,7 +131,7 @@ for j = 1:numY
         if gt(length(wtrT),2)
             if display 
                 disp(logMessage{j})
-            else
+            end
             [dateT,unI] = unique(dateT);
             wtrT = wtrT(unI);
             meVal(j)= mean(interp1(dateT,wtrT,intDays));
