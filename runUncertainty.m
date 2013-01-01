@@ -1,6 +1,7 @@
 function runUncertainty
 % writes all files for raw data in directory.
 % ** does not include Toolik **
+% ** does not support JFM **
 
 defaultsGLTC
 
@@ -42,6 +43,15 @@ for k = 1:numFiles
         [ years ] = ... % get number of years once
             getStats( datesZ, wtrZ, mmS, fitParams, R2);
         % each year
+        for j = 1:length(years)
+            useI = ge(datesZ,datenum(years(j),mmS(1),1)) & ...
+                lt(datesZ,datenum(years(j),mmS(3)+1,1));
+            if ge(sum(useI),minValsUncy)
+                useI = ge(datesZ,datenum(years(j),1,1)) & ...
+                    le(datesZ,datenum(years(j)+1,0,0));
+                plotUncy(datesZ(useI),wtrZ(useI),mmS,fitParams,R2);
+            end
+        end
     end
 end
 end
