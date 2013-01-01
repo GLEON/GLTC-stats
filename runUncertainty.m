@@ -67,6 +67,7 @@ for k = 1:numFiles
             end
             plotTitle = regexprep(titl,' ','_');
             plotTitle = regexprep(plotTitle,'=','-');
+            disp(['exporting ' plotTitle ' Uncertainty figure']);
             export_fig([plotDir plotTitle '_Uncertainty'],figType,figRes,'-nocrop')
         end
     end
