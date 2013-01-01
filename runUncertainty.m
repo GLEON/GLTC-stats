@@ -54,7 +54,8 @@ for k = 1:numFiles
         if any(numPlt);
             clrs = distinguishable_colors(sum(numPlt));
             close all
-            [~,~,titl] = createUncyFigure(unLakes{lk});
+            [~,~,titl] = createUncyFigure(...
+                [unLakes{lk} '_(n=' num2str(sum(numPlt)) '_years)']);
             clrCnt = 1;
             for j = 1:length(years)
                 if numPlt(j)
@@ -65,6 +66,8 @@ for k = 1:numFiles
                     pause(0.1);
                 end
             end
+            xL = get(gca,'XLim');
+            set(gca,'XLim',[endValsUncy xL(2)]);
             plotTitle = regexprep(titl,' ','_');
             plotTitle = regexprep(plotTitle,'=','-');
             disp(['exporting ' plotTitle ' Uncertainty figure']);
