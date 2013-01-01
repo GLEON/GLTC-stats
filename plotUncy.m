@@ -8,7 +8,7 @@ YYYY = YYYY(1);
 
 useI = ge(dates,datenum(YYYY,mmS(1),1)) & ...
     lt(dates,datenum(YYYY,mmS(3)+1,1));
-
+lW = 1.25;
 initNum = sum(useI);
 
 
@@ -35,9 +35,7 @@ for bs = 1:initNum-endValsUncy
     uncy(bs) = (range(2)-range(1))*0.5;
     
 end
-plot(xVal,uncy,'b-','Color',clr);  
-
-
+plot(xVal,uncy,'b-','Color',clr,'LineWidth',lW);  
 
 end
 
