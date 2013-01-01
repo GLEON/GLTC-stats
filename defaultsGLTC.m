@@ -13,6 +13,7 @@ elseif strcmp(timeRange,'JFM')
     toolFitRange = [-30 121];   % Dec 1 to April 30th
 end
 
+numIter = 100;              % number of iterations for subsampling
 minValsUncy = 12;           % minimum number of values (any JAS) to run uncy
 mxTemp = 45;                % degrees C, for outlier removal
 
