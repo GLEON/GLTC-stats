@@ -43,13 +43,15 @@ for k = 1:numFiles
         [ years ] = ... % get number of years once
             getStats( datesZ, wtrZ, mmS, fitParams, R2);
         % each year
+        clrs = distinguishable_colors(length(years));
         for j = 1:length(years)
             useI = ge(datesZ,datenum(years(j),mmS(1),1)) & ...
                 lt(datesZ,datenum(years(j),mmS(3)+1,1));
+            
             if ge(sum(useI),minValsUncy)
                 useI = ge(datesZ,datenum(years(j),1,1)) & ...
                     le(datesZ,datenum(years(j)+1,0,0));
-                plotUncy(datesZ(useI),wtrZ(useI),mmS,fitParams,R2);
+                plotUncy(datesZ(useI),wtrZ(useI),mmS,fitParams,R2,clrs(j,:));
             end
         end
     end
