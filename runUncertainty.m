@@ -17,36 +17,31 @@ for k = 1:numFiles
 end
 availfiles = availfiles(~rmvFile);      % now only files
 %% loop through files, read out, parse and write stats
-
 numFiles = length(availfiles);
 for k = 1:numFiles
     fileName = availfiles(k).name;
     disp('******-------********');
     disp(['working on ' fileName]);
     [dates, wtr, z, lakeNm] = loadLakes( fileName );
-    if iscell(lakeNm) % lakeNm can be cell of 1 or more lakes 
-        unLakes = unique(lakeNm);
-        for lk = 1:length(unLakes);
-            useI = strcmp(unLakes{lk},lakeNm);
-            datesT = dates(useI);
-            wtrT   = wtr(useI);
-            zT     = z(useI);
-            zBest = getBestDepth(datesT,zT);
-            useI = eq(zBest,zT);
-            datesZ = datesT(useI);
-            wtrZ   = wtrT(useI);
-            [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange,timeRange);
-            [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
-                getStats( datesZ, wtrZ, mmS, fitParams, R2);
-        end
-    else % lakeNm can be a single string
-        zBest = getBestDepth(dates,z);
+    lakeT = {''};
+    if ~iscell(lakeNm) % lakeNm can be cell of 1 or more lakes 
+        lakeT{1} = lakeNm;
+        lakeNm = lakeT;
+    end
+    unLakes = unique(lakeNm);
+    for lk = 1:length(unLakes);
+        useI = strcmp(unLakes{lk},lakeNm);
+        datesT = dates(useI);
+        wtrT   = wtr(useI);
+        zT     = z(useI);
+        zBest = getBestDepth(datesT,zT);    % only use best
         useI = eq(zBest,zT);
-        datesZ = dates(useI);
-        wtrZ   = wtr(useI);
+        datesZ = datesT(useI);
+        wtrZ   = wtrT(useI);
         [ fitParams, R2 ] = fitDayNum( datesZ, wtrZ, fitRange,timeRange);
-        [ years, meVal, mxGap, meGap, nmGap, logMessage ] = ...
+        [ years ] = ... % get number of years once
             getStats( datesZ, wtrZ, mmS, fitParams, R2);
+        % each year
     end
 end
 end
