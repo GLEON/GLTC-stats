@@ -1,4 +1,4 @@
-function [fig_h,ax_h,titl] = createUncyFigure(lkNm)
+function [fig_h,ax_h,titl] = createUncyFigure(lkNm,nVals)
 
 titl = regexprep(lkNm,'_',' ');
 defaultsGLTC
@@ -26,7 +26,7 @@ ylabel(['Uncertainty relative to best estimate ('...
     'FontSize',fontS,'FontName',fontN)
 xlabel('Number of samples (per JAS)','Parent',ax_h,...
     'FontSize',fontS,'FontName',fontN)
-title(titl,'Parent',ax_h);
+title([titl ' (' nVals ')'],'Parent',ax_h);
 
 end
 
