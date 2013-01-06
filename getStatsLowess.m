@@ -1,5 +1,5 @@
 function [ years, meVal, mxGap, meGap, nmGap logMessage ] = ...
-    getStatsLowess( dates, wtr, mmS)
+    getStatsLowess( dates, wtr, mmS, fitParams, R2, span)
 
 % LOWESS fits for stats (instead of linear interp)
 
@@ -134,7 +134,10 @@ for j = 1:numY
             end
             [dateT,unI] = unique(dateT);
             wtrT = wtrT(unI);
-            meVal(j)= mean(interp1(dateT,wtrT,intDays));
+            % --- apply LOWESS here --
+            yS = getLowess(dateT, wtrT , intDays,span);
+            meVal(j)= mean(yS);
+
             gpDates = dates(ge(dates,datenum(years(j),mmS(1),1)) & ...
                 le(dates,datenum(years(j),mmS(3)+1,0)));
             gaps    = gpDates(2:end)-gpDates(1:end-1);

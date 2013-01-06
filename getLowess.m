@@ -1,4 +1,4 @@
-function ys=getLowess(xy,xs,span)
+function ys=getLowess(x1, y1 ,xs,span)
 
 %MYLOWESS Lowess smoothing, preserving x values
 % ** taken from: 
@@ -13,9 +13,6 @@ if nargin<3 || isempty(span)
 end
 
 % Sort and get smoothed version of xy data
-xy = sortrows(xy);
-x1 = xy(:,1);
-y1 = xy(:,2);
 ys1 = smooth(x1,y1,span,'loess');
 
 % Remove repeats so we can interpolate
