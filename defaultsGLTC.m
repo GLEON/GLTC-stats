@@ -14,7 +14,7 @@ elseif strcmp(timeRange,'JFM')
 end
 
 numIter = 1000;              % number of iterations for subsampling
-minValsUncy = 12;           % minimum number of values (any JAS) to run uncy
+minValsUncy = 20;           % minimum number of values (any JAS) to run uncy
 endValsUncy = 3;            % bootstrapping cutoff
 mxTemp = 45;                % degrees C, for outlier removal
 confInt= 95;
