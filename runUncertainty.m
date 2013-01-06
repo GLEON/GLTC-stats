@@ -24,9 +24,11 @@ for k = 1:numFiles
     disp('******-------********');
     disp(['working on ' fileName]);
     [dates, wtr, z, lakeNm] = loadLakes( fileName );
-    lakeT = {''};
     if ~iscell(lakeNm) % lakeNm can be cell of 1 or more lakes 
-        lakeT{1} = lakeNm;
+        lakeT = cell(1,length(dates));
+        for j = 1:length(dates)
+            lakeT{j} = lakeNm;
+        end
         lakeNm = lakeT;
     end
     unLakes = unique(lakeNm);
@@ -55,7 +57,7 @@ for k = 1:numFiles
             clrs = distinguishable_colors(sum(numPlt));
             close all
             [~,~,titl] = createUncyFigure(...
-                [unLakes{lk} '_(n=' num2str(sum(numPlt)) '_years)']);
+                unLakes{lk},['n=' num2str(sum(numPlt)) ' years']);
             clrCnt = 1;
             for j = 1:length(years)
                 if numPlt(j)
@@ -67,7 +69,9 @@ for k = 1:numFiles
                 end
             end
             xL = get(gca,'XLim');
-            set(gca,'XLim',[endValsUncy xL(2)]);
+            set(gca,'XLim',[endValsUncy xL(2)+1]);
+            xL = get(gca,'XLim');
+            plot(xL,[0 0],'k--','LineWidth',.75)
             plotTitle = regexprep(titl,' ','_');
             plotTitle = regexprep(plotTitle,'=','-');
             disp(['exporting ' plotTitle ' Uncertainty figure']);
