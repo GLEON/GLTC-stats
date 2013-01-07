@@ -54,28 +54,55 @@ for k = 1:numFiles
             end
         end
         if any(numPlt);
-            clrs = distinguishable_colors(sum(numPlt));
+            uncyVals = NaN(sum(numPlt),92-endValsUncy,numIter,length(spans)+1);
             close all
-            [~,~,titl] = createUncyFigure(...
-                unLakes{lk},['n=' num2str(sum(numPlt)) ' years']);
-            clrCnt = 1;
-            for j = 1:length(years)
+            cnt = 1;
+            for j = 1:3% ***** length(years)
                 if numPlt(j)
+                    tic
                     useI = ge(datesZ,datenum(years(j),1,1)) & ...
                         le(datesZ,datenum(years(j)+1,0,0));
-                    plotUncy(datesZ(useI),wtrZ(useI),mmS,fitParams,R2,clrs(clrCnt,:));
-                    clrCnt = clrCnt+1;
-                    pause(0.1);
+                    [normVals] = getUncy(datesZ(useI),wtrZ(useI),mmS,fitParams,R2);
+                    fillI = size(normVals);
+                    uncyVals(cnt,1:fillI,:,:) = normVals;
+                    cnt= cnt+1;
+                    toc
                 end
             end
+            [~,~,titl] = createUncyFigure(...
+                unLakes{lk},['n=' num2str(sum(numPlt)) ' years']);
+            prc = [100-(100-confInt)/2 (100-confInt)/2];
+            clrs = distinguishable_colors(length(spans)+1);
+            lwr  = NaN(length(92-endValsUncy),length(spans)+1);
+            upr  = NaN(length(92-endValsUncy),length(spans)+1);
+            for n = 1:92-endValsUncy
+                for sp = 1:length(spans)+1
+                    vals = uncyVals(:,n,:,sp);
+                    vals = reshape(vals,sum(numPlt)*numIter,1);
+                    vals = vals(~isnan(vals));
+                    lwr(n,sp)  = prctile(vals,prc(1));
+                    upr(n,sp)  = prctile(vals,prc(2));
+                end
+            end
+            xPlz = 91:-1:3;
+            legStr = cell(1,length(spans)+1);
+            legStr{1} = 'linear';
+            for sp = 1:length(spans)+1
+                plot([xPlz wrev(xPlz)],[lwr(:,sp)' wrev(upr(:,sp))'],'k-','Color',clrs(sp,:),...
+                    'LineWidth',1.5)
+                if ne(sp,1)
+                    legStr{sp} = ['lowess_{' num2str(spans(sp-1)),'}'];
+                end
+            end
+            set(gca,'XLim',[endValsUncy 93]);
             xL = get(gca,'XLim');
-            set(gca,'XLim',[endValsUncy xL(2)+1]);
-            xL = get(gca,'XLim');
+            leg = legend(legStr);
+            set(leg,'EdgeColor','w','Location','best')
             plot(xL,[0 0],'k--','LineWidth',.75)
             plotTitle = regexprep(titl,' ','_');
             plotTitle = regexprep(plotTitle,'=','-');
             disp(['exporting ' plotTitle ' Uncertainty figure']);
-            export_fig([plotDir plotTitle '_Uncertainty'],figType,figRes,'-nocrop')
+            export_fig([plotDir plotTitle '_lowess_Uncertainty_iter' num2str(numIter)],figType,figRes,'-nocrop')
         end
     end
 end

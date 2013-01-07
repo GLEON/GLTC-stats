@@ -13,12 +13,12 @@ elseif strcmp(timeRange,'JFM')
     toolFitRange = [-30 121];   % Dec 1 to April 30th
 end
 
-numIter = 5000;              % number of iterations for subsampling
+numIter = 1000;              % number of iterations for subsampling
 minValsUncy = 20;           % minimum number of values (any JAS) to run uncy
 endValsUncy = 3;            % bootstrapping cutoff
 mxTemp = 45;                % degrees C, for outlier removal
 confInt= 95;
-span   = 21;                 % LOWESS fit span
+spans  = [7 14 21 30];                 % LOWESS fit spans
 
 dateForm = 'yyyy-mm-dd HH:MM:SS';
 figRes   = '-m1';
