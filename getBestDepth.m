@@ -12,7 +12,7 @@ for i = 1:length(unZ)
     useI = eq(z,unZ(i));
     datesTemp = dates(useI);
     yr = datevec(datesTemp);
-    yrCnt(i) = sum(unique(yr(:,1)));
+    yrCnt(i) = length(unique(yr(:,1)));
 end
 
 [~,mxI] = max(yrCnt);
