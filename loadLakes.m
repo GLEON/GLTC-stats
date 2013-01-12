@@ -1093,12 +1093,46 @@ elseif strcmp(fileName,'NTL_LTER_Lakes_except_ME.txt')
     lakeNm = regexprep(lakeNm,'FI','NTL_Fish');
     lakeNm = regexprep(lakeNm,'BM','NTL_Big_Muskie');
     lakeNm = regexprep(lakeNm,'TR','NTL_Trout');
+elseif strcmp(fileName,'GLTC_NYCDEP_Reservoir_Temp data.xlsx')
+    wtr = [];
+    z = [];
+    dates = [];
+    lakeNm = {};
+    names = {'Cannonsville','Pepacton','Rondout',...
+        'Neversink','Schoharie','Ashokan East',...
+        'Ashokan West','Kensico'};
+    for lk = 1:length(names);
+        name = names{lk};
+    
+        [num,txt] = xlsread([rootDir fileName],...
+            name);
+        dI = 1;
+        stI  = 4;
+        zI   = 4;
+        wtrI = 5;
+        T_wtr = num(:,wtrI);
+        T_dates  = datenum(txt(2:end,dI));
+        T_z   = num(:,zI);
+        siteTxt= txt(2:end,stI);
+        siteNum= num(:,stI-1);      % some stored as strings, some not
+        tNmes = cell(length(T_wtr),1);
+        for j = 1:length(T_wtr)
+            if isempty(siteTxt{j})
+                tNmes{j} = [name '_' num2str(siteNum(j))];
+            else
+                tNmes{j} = [name '_' siteTxt{j}];
+            end
+        end
+        wtr = [wtr; T_wtr];
+        dates = [dates; T_dates];
+        z     = [z; T_z];
+        lakeNm = [lakeNm; tNmes];
+    end
 end
-
 
 lakeNm = regexprep(lakeNm,' ','_');
 lakeNm = regexprep(lakeNm,'…','');
-rmvI = gt(wtr,mxTemp);
+rmvI = gt(wtr,mxTemp) | lt(wtr,mnTemp);
 wtr = wtr(~rmvI);
 z   = z(~rmvI);
 dates = dates(~rmvI);
