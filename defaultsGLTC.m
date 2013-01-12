@@ -17,6 +17,7 @@ numIter = 1000;              % number of iterations for subsampling
 minValsUncy = 20;           % minimum number of values (any JAS) to run uncy
 endValsUncy = 3;            % bootstrapping cutoff
 mxTemp = 45;                % degrees C, for outlier removal
+mnTemp = -5;
 confInt= 95;
 spans  = [7 14 21 30];                 % LOWESS fit spans
 
