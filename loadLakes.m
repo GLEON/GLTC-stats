@@ -1128,6 +1128,36 @@ elseif strcmp(fileName,'GLTC_NYCDEP_Reservoir_Temp data.xlsx')
         z     = [z; T_z];
         lakeNm = [lakeNm; tNmes];
     end
+elseif strcmp(fileName,'FLD_TEMP_Rich_Nihar.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+            'FFDT');
+        dI = 2;
+        stI  = 1;
+        zI   = 1;
+        wtrI = 2;
+    
+    lakeNm = txt(3:end,stI);
+    wtr   = num(:,wtrI);
+    z     = num(:,zI);
+    dates = NaN(length(wtr),1);
+    for j= 1:length(dates)
+        if ~isnan(wtr(j))
+            dates(j) = datenum(txt(2+j,dI),'yyyy-mm-dd');
+        end
+    end
+    lakeNm = regexprep(lakeNm,'BRK','Kensico');
+    lakeNm = regexprep(lakeNm,'EAW','Ashokan_West');
+    lakeNm = regexprep(lakeNm,'EDP','Pepacton');
+    lakeNm = regexprep(lakeNm,'RR','Rondout');
+    lakeNm = regexprep(lakeNm,'SS','Schoharie');
+    lakeNm = regexprep(lakeNm,'WDC','Cannonsville');
+    lakeNm = regexprep(lakeNm,'NN','Neversink');
+    lakeNm = regexprep(lakeNm,'EAE','Ashokan_East');
+    rmvI = isnan(wtr) | isnan(z);
+    wtr = wtr(~rmvI);
+    z   = z(~rmvI);
+    dates = dates(~rmvI);
+    lakeNm = lakeNm(~rmvI);
 end
 
 lakeNm = regexprep(lakeNm,' ','_');
@@ -1140,4 +1170,4 @@ if iscell(lakeNm)
     lakeNm = lakeNm(~rmvI);
 end
 
-end
+end2
