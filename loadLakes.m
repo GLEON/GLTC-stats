@@ -1128,21 +1128,21 @@ elseif strcmp(fileName,'GLTC_NYCDEP_Reservoir_Temp data.xlsx')
         z     = [z; T_z];
         lakeNm = [lakeNm; tNmes];
     end
-elseif strcmp(fileName,'JSR_FLD_TEMP_Rich_Nihar.xls')
+elseif strcmp(fileName,'FLD_TEMP_Nihar.xls')
     [num,txt] = xlsread([rootDir fileName],...
-            'FFDT');
+            'SWT_final');
         dI = 2;
         stI  = 1;
         zI   = 1;
         wtrI = 2;
     
-    lakeNm = txt(3:end,stI);
+    lakeNm = txt(2:end,stI);
     wtr   = num(:,wtrI);
     z     = num(:,zI);
     dates = NaN(length(wtr),1);
     for j= 1:length(dates)
         if ~isnan(wtr(j))
-            dates(j) = datenum(txt(2+j,dI),'yyyy-mm-dd');
+            dates(j) = datenum(txt(1+j,dI),'yyyy-mm-dd');
         end
     end
     lakeNm = regexprep(lakeNm,'BRK','Kensico');
@@ -1182,6 +1182,22 @@ elseif strcmp(fileName(end-7:end),'_WTd.mat')
     
     regI = regexp(fileName,'_');
     lakeNm = fileName(1:regI);
+elseif strcmp(fileName,'Lake_Tarawera.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+        'Raw Data');
+    dI = 2;
+    zI = 7;
+    wtrI = 9;
+    wtr = num(:,wtrI);
+    dates  = datenum(txt(2:end,dI));
+    
+    rmvI = isnan(wtr);
+    z   = num(:,zI);
+    wtr = wtr(~rmvI);
+    dates= dates(~rmvI);
+    z = z(~rmvI);
+    
+    lakeNm = 'Tarawera';
 end
 
 lakeNm = regexprep(lakeNm,' ','_');
