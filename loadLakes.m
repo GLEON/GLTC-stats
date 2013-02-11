@@ -1271,6 +1271,20 @@ elseif strcmp(fileName,'north pine.xls')
 
     
     lakeNm = 'North Pine dam wall';
+elseif strcmp(fileName,'LevenInterpolatedTemperatures.xlsx')
+    [num,txt] = xlsread([rootDir fileName],...
+        'RawData');
+    dI = 1;
+    wtrI = 1;
+    wtr = num(:,wtrI);
+    dates  = datenum(txt(2:end,dI));
+    
+    rmvI = isnan(wtr);
+    wtr = wtr(~rmvI);
+    dates= dates(~rmvI);
+    z = wtr*0;
+    
+    lakeNm = 'Loch Leven';
 end
 
 lakeNm = regexprep(lakeNm,' ','_');
