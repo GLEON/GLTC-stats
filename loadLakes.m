@@ -1198,6 +1198,79 @@ elseif strcmp(fileName,'Lake_Tarawera.xls')
     z = z(~rmvI);
     
     lakeNm = 'Tarawera';
+elseif strcmp(fileName,'Loch_summer_temperature_GLTC.xlsx')
+    [num,txt] = xlsread([rootDir fileName],...
+        'LOCH.O');
+    dI = 6;
+    wtrI = 5;
+    wtr = num(:,wtrI);
+    dates  = datenum(txt(3:end,dI));
+    
+    rmvI = isnan(wtr);
+    wtr = wtr(~rmvI);
+    dates= dates(~rmvI);
+    z = wtr*0;
+    
+    lakeNm = 'Loch Vale Outlet';
+elseif strcmp(fileName,'SkyPond_summer_temperature_GLTC.xlsx')
+    [num,txt] = xlsread([rootDir fileName],...
+        'SKY.O');
+    dI = 6;
+    wtrI = 5;
+    wtr = num(:,wtrI);
+    dates  = datenum(txt(3:end,dI));
+    
+    rmvI = isnan(wtr);
+    wtr = wtr(~rmvI);
+    dates= dates(~rmvI);
+    z = wtr*0;
+    
+    lakeNm = 'Sky Pond Outlet';
+elseif strcmp(fileName,'north pine.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+        'weekly');
+    dI = 1;
+    datesT = NaN(length(txt(6:end,dI)),1);
+    dTxt = txt(6:end,dI);
+    dTxt = regexprep(dTxt,'"','');
+    for j = 1:length(dTxt)
+        if ~strcmp(dTxt{j},'')
+            datesT(j) = datenum(dTxt(j),'dd-mm-yy');
+        end
+    end
+    
+    % wtr is 0, 3, 6, 9, 12, 15, 18, 21, 24[10], 
+    zs = [0 3 6 9 12 15 18 21 24];
+    wtr = [];
+    z = [];
+    dates = [];
+    for n = 1:9
+        dates = [dates; datesT];
+        wtr = [wtr; num(:,n)];
+        z = [z; ones(length(num(:,n)),1)*zs(n)];
+    end
+    rmvI = isnan(wtr) | lt(wtr,5.1);
+    wtr = wtr(~rmvI);
+    z = z(~rmvI);
+    dates= dates(~rmvI);
+
+    
+    [num,txt] = xlsread([rootDir fileName],...
+        'monthly');
+    dI = 1;
+    wtrI = 8;
+    zI = 3;
+    
+    dates = [dates; datenum(txt(2:end,dI))];
+    wtr = [wtr; num(:,wtrI)];
+    z = [z; num(:,zI)];
+    rmvI = isnan(wtr);
+    wtr = wtr(~rmvI);
+    z = z(~rmvI);
+    dates= dates(~rmvI);
+
+    
+    lakeNm = 'North Pine dam wall';
 end
 
 lakeNm = regexprep(lakeNm,' ','_');
