@@ -1158,6 +1158,30 @@ elseif strcmp(fileName,'FLD_TEMP_Nihar.xls')
     z   = z(~rmvI);
     dates = dates(~rmvI);
     lakeNm = lakeNm(~rmvI);
+elseif strcmp(fileName,'Ontario_NOAA.mat')
+    load([rootDir fileName])
+    
+    dates = NaN(length(yrs)*length(dys),1);
+    z = dates;
+    wtr = dates;
+    cnt = 0;
+    for j = 1:length(yrs)
+        for i = 1:length(dys)
+            if ~isnan(WTd(i,j))
+                cnt = cnt+1;
+                dates(cnt) = datenum(yrs(j),0,0)+dys(i);
+                wtr(cnt) = WTd(i,j);
+                z(cnt) = 0;
+            end
+        end
+    end
+    rmvI = isnan(dates);
+    dates = dates(~rmvI);
+    wtr = wtr(~rmvI);
+    z = z(~rmvI);
+    
+    regI = regexp(fileName,'_');
+    lakeNm = fileName(1:regI);
 elseif strcmp(fileName(end-7:end),'_WTd.mat')
     load([rootDir fileName])
     
@@ -1285,7 +1309,98 @@ elseif strcmp(fileName,'LevenInterpolatedTemperatures.xlsx')
     z = wtr*0;
     
     lakeNm = 'Loch Leven';
+elseif strcmp(fileName,'Whitepine Swan Sans Chambre surface temp.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+        'WPM Final');
+    dI = 2;
+    zI = 1;
+    wtrI = 2;
+    wtr = num(:,wtrI);
+    z = num(:,zI);
+    dates  = datenum(txt(2:end,dI));
+    
+    lakeNm = cell(length(txt(2:end,dI)),1);
+    for j = 1:length(txt(2:end,dI))
+        lakeNm{j} = 'Whitepine McLeod';
+    end
+    % - next sheet
+    [num,txt] = xlsread([rootDir fileName],...
+        'Sans Chambre final');
+
+    lakeNm = [lakeNm;  cell(length(txt(2:end,dI)),1)];
+    for j = 1:length(txt(2:end,dI))
+        lakeNm{j+length(wtr)} = 'Sans Chambre';
+    end
+    wtr = [wtr;  num(:,wtrI)];
+    z   = [z; num(:,zI)];
+    dates = [dates; datenum(txt(2:end,dI))];
+    
+    % - next sheet
+    [num,txt] = xlsread([rootDir fileName],...
+        'Swan final');
+
+    lakeNm = [lakeNm;  cell(length(txt(2:end,dI)),1)];
+    for j = 1:length(txt(2:end,dI))
+        lakeNm{j+length(wtr)} = 'Swan';
+    end
+    wtr = [wtr;  num(:,wtrI)];
+    z   = [z; num(:,zI)];
+    dates = [dates; datenum(txt(2:end,dI))];
+    
+    % 3 sheets, Sans Chambre final,Swan final
+    
+    rmvI = isnan(wtr);
+    wtr = wtr(~rmvI);
+    dates= dates(~rmvI);
+    z = z(~rmvI);
+    lakeNm = lakeNm(~rmvI);
+elseif strcmp(fileName,'ClearWater_all.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+        'CR Final');
+    dI = 1;
+    zI = 1;
+    wtrI = 2;
+    wtr = num(:,wtrI);
+    z = num(:,zI);
+    dates  = datenum(txt(2:end,dI));
+    
+    lakeNm = 'Clearwater';
+elseif strcmp(fileName,'Hannah_all.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+        'HH_Final ');
+    dI = 1;
+    zI = 1;
+    wtrI = 2;
+    wtr = num(:,wtrI);
+    z = num(:,zI);
+    dates  = datenum(txt(2:end,dI));
+    
+    lakeNm = 'Hannah';
+elseif strcmp(fileName,'Lohi_all.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+        'Final');
+    dI = 1;
+    zI = 1;
+    wtrI = 2;
+    wtr = num(:,wtrI);
+    z = num(:,zI);
+    dates  = datenum(txt(2:end,dI));
+    
+    lakeNm = 'Lohi';
+elseif strcmp(fileName,'Middle_all.xls')
+    [num,txt] = xlsread([rootDir fileName],...
+        'ME Final');
+    dI = 1;
+    zI = 1;
+    wtrI = 2;
+    wtr = num(:,wtrI);
+    z = num(:,zI);
+    dates  = datenum(txt(2:end,dI));
+    
+    lakeNm = 'Middle';
 end
+
+
 
 lakeNm = regexprep(lakeNm,' ','_');
 lakeNm = regexprep(lakeNm,'…','');
