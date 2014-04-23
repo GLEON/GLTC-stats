@@ -1,0 +1,22 @@
+Process for calculating JAS and JFM means from raw data:
+
+If data providers have given raw data to the GLTC group to have JAS and JFM means calculated, a series of automated scripts have been used to create the final data products. These scripts produce JAS and JFM means, calculate gap statistics, write these means to an xls file, and keep track of any processing anomalies by writing a log file. This process is explained in detail here, but all scripts for this process can be found at https://github.com/GLEON/GLTC-stats.
+
+Details are as follows: 
+1) A dataset-specific translator is created, which allows the data provider's raw data to remain intact but extracts and unifies the information necessary for calculating GLTC means. Data provider file formats vary from xls, dat, mat, txt, csv, etc. with mostly unique data structures. The translator script creates equal length vectors for {dates},{water temperatures}, {depths of temperature measurements}, and {lake name}. Often data from multiple lakes is contained within a single contributor's file, hence the need for the {lake name} vector [see "loadLakes.m"]. 
+
+2) For each unique lake name in the {lake name} vector, the program loops through the unique depths used for temperature measurements, and calculates a mean for each period (JAS and JFM) for each year with sufficient data.
+
+2a) Any measurements with the same duplicate date, lake name, and depth of sampling are averaged into a single value.
+
+2b) The interpolation period for the calculation of a JAS mean is from July 1st to September 31st. Assuming sampling for a given year precedes (or starts on) the first interpolation date and the extends past (or ends on) the last interpolation date, linear interpolation is used to create a daily value for all dates between the beginning and end of the interpolation period (inclusive). The JAS mean is the mean of all of these daily values. The same applies for JFM means, except that the start date is January 1st and the end date is March 31st [see "getStats.m"]. 
+
+2c) Gaps between sampling points are calculated only for the sampling points that exist within the interpolation period. Gaps are the intervals (in days) between sequential sampling times. The maximum gap is the max of all gaps for a single year. The mean gap is the mean of all gaps for a single year.
+
+3) If sampling does not extend to or beyond the start and end dates of the interpolation period, a curve-fitting extrapolation routine is used to populate daily values for the missing part of the interpolation period.
+
+3a) All temperature values (for a given depth and given lake) are pooled according to day-of-year (DoY), and fit to a curve of the type "temperature = a*DoY^2+b*DoY+c". This equation yields a generic representation of the seasonal pattern in the data. For these fits, the values for a and b are stored, as well as the R^2 value of the fit [see "fitDayNum.m"]. 
+
+3b) For years that do not have data that cover the full interpolation period, the curve fit is used to extrapolate values preceding the first sample point (if applicable) or beyond the last sample point (if applicable), or in some cases, both. The curve is adjusted along the Y (temperature) axis by modifying the value of c in the equation in 3a to intersect the first sample point (if missing data appears during the early portion of the interpolation period) or last sample point (if there is missing data in the latter part of the interpolation period), and daily values are taken from the equation for the portion(s) missing from the record. The starting date and ending dates when the equation is used, as well as the equation for the extrapolation and the R^2 are then written to the GLTC log file. For example, text from the GLTC log file for the 0.5 m depth of Lake Biwa in 1975: "Biwa_z=0.5 1975 only JASO used (before 1975-Jul-02 fit to (-0.0017)*dayNum^2+(0.7783)*dayNum+c; R2=0.7553)". Therefore, in 1975 for the 0.5 m depth of Lake Biwa, an approximation was used for the value of July 1st, while July 2nd-September 31st daily values were calculated as a linear interpolation between sample points as outlined in 2b. 
+
+4) After all means and gaps are calculated for all depths for a given lake, those data are written to a lake-specific xls spreadsheet, with individual xls worksheets for each depth. The format on a JAS worksheet is: "Year | JAS_mean | max gap | mean gap | number of gaps". [see "writeStatsToXLS.m"]
